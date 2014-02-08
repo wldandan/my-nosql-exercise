@@ -14,4 +14,4 @@ redis.pipelined do
   end
 end
 cost = Time.now - start
-puts "cost=#{cost}"
+puts "cost #{cost} seconds"
