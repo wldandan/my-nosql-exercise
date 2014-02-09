@@ -1,4 +1,5 @@
 require 'mysql'
+require_relative 'benchmark'
 
 N = 100000
 
@@ -15,7 +16,7 @@ class MySQLClient
     @m = Mysql.init
   end
 
-  def connect
+  def prepare
     @m.connect(@host, @user, @pass, @db, @port, @sock, @flag)
   end
 
@@ -27,21 +28,11 @@ class MySQLClient
     @m.query("create table t (id int)")
   end
 
-  def insert_value val
-    @m.query("insert into t values (#{val})")
+  def run i
+    @m.query("insert into t values (#{rand(N)})")
   end
 
 end
 
-mc = MySQLClient.new
-mc.connect
-#mc.create_table
-
-start = Time.now
-N.times do
-  mc.insert_value rand(N)
-end
-cost = Time.now - start
-puts "cost #{cost} seconds"
-
-mc.close
+benchmark = Benchmark.new(MySQLClient.new)
+benchmark.run
