@@ -7,8 +7,8 @@ class Benchmark
 
   def run
     @client.prepare
-    i = 1
     start = Time.now
+    i = 1
     N.times do
       @client.run i
       i = i + 1
