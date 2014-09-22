@@ -1,8 +1,9 @@
-require_relative 'benchmark_test'
+require 'mysql'
+require_relative 'benchmark'
 
-class TestMySQL < BenchmarkTest
+class MySQLClient
 
-  setup do
+  def initialize
     @host = ENV['MYSQL_HOST'] || 'localhost'
     @port = (ENV['MYSQL_PORT'] || '3306').to_i
     @user = ENV['MYSQL_USER'] || 'root'
@@ -11,19 +12,22 @@ class TestMySQL < BenchmarkTest
     @sock = ENV['MYSQL_SOCK']
     @flag = ENV['MYSQL_FLAG']
     @m = Mysql.init
-    @N = 10000
+  end
+
+  def prepare
     @m.connect(@host, @user, @pass, @db, @port, @sock, @flag)
   end
 
-  teardown do
+  def close
     @m.close if @m
   end
 
-  transaction do
-    @m.query("insert into t values (#{rand(N)})")
+  def create_table
+    @m.query("create table t (id int)")
+  end
+
+  def run i
+    @m.query("insert into t values (#{rand(1000)})")
   end
 
 end
-
-#TestMySQL.new.run
-

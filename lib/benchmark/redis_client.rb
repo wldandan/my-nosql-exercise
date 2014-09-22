@@ -2,7 +2,6 @@ require 'redis'
 require 'json'
 require_relative 'benchmark'
 
-N = 100000
 class RedisClient
 
   def initialize
@@ -22,11 +21,7 @@ class RedisClient
   end
 
   def run i
-    @r.set("demo:#{i}", rand(N))
+    @r.set("demo:#{i}", rand(1000))
   end
 
 end
-
-
-benchmark = Benchmark.new(RedisClient.new)
-benchmark.run
