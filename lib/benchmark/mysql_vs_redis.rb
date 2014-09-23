@@ -1,6 +1,5 @@
+require_relative '../helper'
 require_relative 'benchmark'
-require_relative 'mysql_client'
-require_relative 'redis_client'
 
 
 times = 50000

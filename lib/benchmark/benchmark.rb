@@ -9,7 +9,7 @@ class Benchmark
   end
 
   def run
-    @client.prepare
+    @client.connect
 
     start = Time.now
     i = 0
