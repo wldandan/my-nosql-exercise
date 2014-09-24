@@ -34,7 +34,7 @@ class LockWithTimeout
   end
 
   def redis
-    RedisClient.new.connect
+    @connection ||= RedisClient.new.connect
   end
 
 end
